@@ -51,79 +51,23 @@
     </tr>
 </table>
 <h1>Range patients By medCard No.</h1>
-<form action="range_patients" method="post">
+<form action="range_patients">
     <input type="text" name="patients_start" placeholder="Start">
     <input type="text" name="patients_end" placeholder="End">
     <input type="submit" value="Show">
 </form>
-<table class="table table-striped table-sm table-hover table-bordered" th:if="${!range_patients.isEmpty()}">
-    <tr>
-        <th>Id</th>
-        <th>Lastname</th>
-        <th>Name</th>
-        <th>Father name</th>
-        <th>Address</th>
-        <th>Phone number</th>
-        <th>Med. card No.</th>
-        <th>Diagnos</th>
-        <th>Delete</th>
-    </tr>
-    <tr th:each="patient: ${range_patients}">
-        <td th:text="${patient.id}"></td>
-        <td th:text="${patient.surname}"></td>
-        <td th:text="${patient.name}"></td>
-        <td th:text="${patient.fatherName}"></td>
-        <td th:text="${patient.address}"></td>
-        <td th:text="${patient.phonenumber}"></td>
-        <td th:text="${patient.medCardNo}"></td>
-        <td th:text="${patient.diagnos}"></td>
-        <td>
-            <a class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
-               data-bs-target="#myconfirm"
-               th:attr="data-bs-link=@{/remove_patient(medcardno=${patient.medCardNo})}, data-bs-text=${patient.name}, data-bs-id=${patient.medCardNo}">delete</a>
-        </td>
-    </tr>
-</table>
+
 <h1>Phone number of patient's begin with:</h1>
-<form action="number_patients" method="post">
+<form action="number_patients">
     <input type="text" name="patient_phonenumber_first" placeholder="phonenumber begin with">
     <input type="submit" value="Show">
 </form>
-<table class="table table-striped table-sm table-hover table-bordered" th:if="${!number_patients.isEmpty()}">
-    <tr>
-        <th>Id</th>
-        <th>Lastname</th>
-        <th>Name</th>
-        <th>Father name</th>
-        <th>Address</th>
-        <th>Phone number</th>
-        <th>Med. card No.</th>
-        <th>Diagnos</th>
-        <th>Delete</th>
-    </tr>
-    <tr th:each="patient: ${number_patients}">
-        <td th:text="${patient.id}"></td>
-        <td th:text="${patient.surname}"></td>
-        <td th:text="${patient.name}"></td>
-        <td th:text="${patient.fatherName}"></td>
-        <td th:text="${patient.address}"></td>
-        <td th:text="${patient.phonenumber}"></td>
-        <td th:text="${patient.medCardNo}"></td>
-        <td th:text="${patient.diagnos}"></td>
-        <td>
-            <a class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
-               data-bs-target="#myconfirm"
-               th:attr="data-bs-link=@{/remove_patient(medcardno=${patient.medCardNo})}, data-bs-text=${patient.name}, data-bs-id=${patient.medCardNo}">delete</a>
-        </td>
-    </tr>
-</table>
 
 <h1>Find patient by medcard No.</h1>
 <form action="find_patient">
     <input type="text" name="patient_medcardno" placeholder="medCard No.">
     <input type="submit" value="Find">
 </form>
-<tr th:text="${finded_patient}"></tr>
 
 <div class="modal fade" id="myconfirm" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="staticWarningLabel" aria-hidden="true">
@@ -159,7 +103,7 @@
     })
 </script>
 <h1>Add a patient</h1>
-<form action="add_patient" method="post">
+<form action="add_patient">
     <input type="text" style="width:150px;height:30px" name="patient_id" placeholder="Id">
     <input type="text" style="width:150px;height:30px" name="patient_lastname" placeholder="Lastname">
     <input type="text" style="width:150px;height:30px" name="patient_name" placeholder="Name">

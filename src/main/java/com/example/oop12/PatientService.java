@@ -16,43 +16,27 @@ public class PatientService {
     private DiagnosArray diagnosArray;
     private ArrayOperations arrayOperations;
     private IO io;
-    private Range range;
-    private int num;
-    private int medcardno;
 
 
     @PostConstruct
     public void init(){
-        medcardno = -1;
-        range = new Range();
         io = new IO();
         arrayOperations = new ArrayOperations();
         patientArray = io.readFromDefaultFile(IO.DEFAULT_FILE);
         diagnosArray = DiagnosArray.parseDiagnosArray(patientArray);
     }
 
-    public Patient findPatientByMedcard(){
+    public Patient findPatientByMedcard(int medcardno){
         return patientArray.findPatientByMedCardNo(medcardno);
     }
 
-    public ArrayList<Patient> getRangePatients() {
+    public ArrayList<Patient> getRangePatients(int start, int end) {
+        Range range = new Range(start,end);
         return arrayOperations.filter(patientArray, range).getArrayListPatient();
     }
 
-    public ArrayList<Patient> getNumberPatients() {
+    public ArrayList<Patient> getNumberPatients(int num) {
         return arrayOperations.filter(patientArray, num).getArrayListPatient();
-    }
-
-    public void setRange(int start, int end){
-        range = new Range(start, end);
-    }
-
-    public void setNum(int num){
-        this.num = num;
-    }
-
-    public void setMedcardno(int medcardno){
-        this.medcardno = medcardno;
     }
 
     public ArrayList<Patient> getPatients(){

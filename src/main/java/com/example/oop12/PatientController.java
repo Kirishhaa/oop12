@@ -5,7 +5,7 @@ import com.example.oop12.structures.Patient;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -14,24 +14,21 @@ public class PatientController {
 
     private PatientService service;
 
-    @RequestMapping("/patients")
+    @GetMapping("/patients")
     public String showPatientArray(Model model) {
         model.addAttribute("patients", service.getPatients());
         model.addAttribute("diagnos_array",service.getDiagnosArray());
         model.addAttribute("amount_array", service.getAmountArray());
-        model.addAttribute("range_patients", service.getRangePatients());
-        model.addAttribute("number_patients", service.getNumberPatients());
-        model.addAttribute("finded_patient", service.findPatientByMedcard());
         return "patients";
     }
 
-    @RequestMapping("/save_patients")
+    @GetMapping("/save_patients")
     public String savePatients(){
         service.savePatients();
         return "redirect:/patients";
     }
 
-    @RequestMapping("/add_patient")
+    @GetMapping("/add_patient")
     public String addPatient(
             @RequestParam("patient_id") int id,
             @RequestParam("patient_lastname") String lastname,
@@ -53,28 +50,31 @@ public class PatientController {
         return "redirect:/patients";
     }
 
-    @RequestMapping("/remove_patient")
+    @GetMapping("/remove_patient")
     public String removePatient(@RequestParam int medcardno){
         service.deletePatientByMedCardNo(medcardno);
         return "redirect:/patients";
     }
 
-    @RequestMapping("/range_patients")
+    @GetMapping("/range_patients")
     public String rangePatients(@RequestParam("patients_start") int start,
-                                @RequestParam("patients_end") int end){
-        service.setRange(start, end);
-        return "redirect:/patients";
+                                @RequestParam("patients_end") int end,
+                                Model model){
+        model.addAttribute("range_patients", service.getRangePatients(start, end));
+        return "/range";
     }
 
-    @RequestMapping("/number_patients")
-    public String numberPatients(@RequestParam("patient_phonenumber_first") int num) {
-        service.setNum(num);
-        return "redirect:/patients";
+    @GetMapping("/number_patients")
+    public String numberPatients(@RequestParam("patient_phonenumber_first") int num,
+                                 Model model) {
+        model.addAttribute("number_patients", service.getNumberPatients(num));
+        return "/phonenumber";
     }
 
-    @RequestMapping("/find_patient")
-    public String findPatient(@RequestParam("patient_medcardno") int medcardNo){
-        service.setMedcardno(medcardNo);
-        return "redirect:/patients";
+    @GetMapping("/find_patient")
+    public String findPatient(@RequestParam("patient_medcardno") int medcardNo,
+                              Model model){
+        model.addAttribute("finded_patient", service.findPatientByMedcard(medcardNo));
+        return "/finding";
     }
 }
